@@ -3,8 +3,7 @@ import random
 
 app = Flask(__name__)
 
-# REQUIRED for sessions
-app.secret_key = "super-secret-key"  # change later for production
+app.secret_key = "super-secret-key" 
 
 
 def start_new_game(level):
@@ -28,16 +27,12 @@ def start_new_game(level):
 def index():
     message = ""
 
-    # -----------------------------
-    # START GAME (difficulty chosen)
-    # -----------------------------
+
     if request.method == "POST" and "difficulty" in request.form:
         start_new_game(request.form["difficulty"])
         return redirect(url_for("index"))
 
-    # -----------------------------
-    # HANDLE GUESS
-    # -----------------------------
+
     if request.method == "POST" and "guess" in request.form:
         if not session.get("game_over", True):
             guess = int(request.form["guess"])
